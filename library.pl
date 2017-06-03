@@ -1,48 +1,59 @@
-r#!/usr/bin/perl
+#!/usr/bin/perl
 use strict;
 
 # Library file used across the set of server build scripts
 
+sub check_sudo
+{
+	if(`whoami` !~ /root/)
+	{
+		die "You must be running this as root...";
+	}
+
+	if($ENV{SUDO_USER} eq '')
+	{
+		die "You can not run this directly as root.  You must be sudo'ing...";
+	}
+}
 sub run
 {
-  # == Provide a command to run
-  my ($cmd) = @_;
-  
-  &log("Running : $cmd");
-  system($cmd);
-  &log("  - Return : $?");
+	# == Provide a command to run
+	my ($cmd) = @_;
+
+	&log("Running : $cmd");
+	system($cmd);
+	&log("  - Return : $?");
 }
 
 sub log
 {
-  # == Writes the log file
-  my ($txt) = @_;
-  
-  open(LOG,">>/var/log/server_build.log");
-  print LOG scalar gmtime(time) . " - $txt\n";
-  print "LOG --> $txt\n";
-  close LOG;
+	# == Writes the log file
+	my ($txt) = @_;
+
+	open(LOG,">>/var/log/server_build.log");
+	print LOG scalar gmtime(time) . " - $txt\n";
+	print "LOG --> $txt\n";
+	close LOG;
 }
 
 sub ubuntu_version
 {
-  # == return the current ubuntu version (which is supported by the script
-  
-  my $out = `lsb_release -r 2>&1`;
-  
-  if($out =! /Ubuntu 17\.04/)
-  {
-    return "17.04";
-  }
-  else
-  {
-    return "unknown";
-  }  
+	# == return the current ubuntu version (which is supported by the script
+	my $out = `lsb_release -r 2>&1`;
+
+	if($out =! /Ubuntu 17\.04/)
+	{
+		return "17.04";
+	}
+	else
+	{
+		return "unknown";
+	}
 }
 
 sub manage_config
 {
-  ($CONFIG_FILE) = @_;
+	my ($CONFIG_FILE) = @_;
 	my %Q;
 
 	# -- if there is a config file, read it
