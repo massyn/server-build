@@ -7,7 +7,7 @@ sub check_sudo
 {
 	if(`whoami` !~ /root/)
 	{
-		die "You must be running this as root...";
+		die "You must be running this as root (try sudo instead)...";
 	}
 
 	if($ENV{SUDO_USER} eq '')
