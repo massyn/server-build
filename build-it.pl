@@ -40,6 +40,9 @@ close IN;
 # == get the system ready
 &run("apt-get update");
 
+# == configure some of the basics
+&setup_basics($Q{HOSTNAME},$Q{DOMAIN});
+
 # == start installing packages
 open(IN,"packages.cfg");
 foreach my $a (<IN>)
@@ -59,4 +62,19 @@ foreach my $a (<IN>)
 	}
 }
 
+&log(" ===== ALL DONE ===== ");
 
+exit(0);
+# ==
+sub setup_basics
+{
+        my ($SERVERNAME,$DOMAIN) = @_;
+        &run("hostname $SERVERNAME");
+        &run("domainname $DOMAIN");
+
+        &addline("/etc/hosts","127.0.0.1        $SERVERNAME");
+        &addline("/etc/hosts","127.0.0.1        $SERVERNAME.$DOMAIN");
+
+        &run("figlet $SERVERNAME > /etc/motd");
+        &run("echo Authorised Users Only > /etc/issue");
+}
