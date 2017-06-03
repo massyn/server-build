@@ -28,7 +28,8 @@ open(IN,"$CONFIG");
 foreach my $l (<IN>)
 {
   chomp($l);
-  if($l eq '' || $l =~ /^#/)
+
+if($l eq '' || $l =~ /^#/)
   {
     next;
   }
@@ -61,6 +62,13 @@ foreach my $a (<IN>)
 	{
 		&run("apt-get -y install $p");
 	}
+}
+
+if($Q{ROLEWEB} =~ /y/i)
+{
+	&log(" == Building the web server == ");
+	
+	&setup_web();
 }
 
 &log(" ===== ALL DONE ===== ");
