@@ -129,3 +129,63 @@ sub ask
         return $result;
 }
 
+
+sub addline
+{
+        my ($file,$line) = @_;
+
+        # is it in there ?
+        open(IN,"$file") || die "can not read $file - $!";
+        foreach my $a (<IN>)
+        {
+                chomp($a);
+                if($a eq "$line")
+                {
+                        close IN;
+                        return();
+                }
+        }
+        close IN;
+
+        # == we made it this far, so add it in
+        open(OUT,">>$file");
+        print OUT "$line\n";
+        close OUT;
+}
+
+sub param
+{
+        my ($file,$param,$value) = @_;
+
+        print "Checking file $file for $param as $value\n";
+        my $data;
+        open(IN,"$file") || die "Can not read $file - $!";
+        foreach my $a (<IN>)
+        {
+                $data .= $a;
+        }
+        close IN;
+
+        my $tag = 0;
+        open(OUT,">$file") || die "Oh dear - $!";
+        foreach my $a (split(/\n/,$data))
+        {
+                chomp($a);
+                if($a =~ /$param/i)
+                {
+                        print OUT "$param $value\n";
+                        $tag = 1;
+                }
+                else
+                {
+                        print OUT "$a\n";
+                }
+        }
+
+        if($tag == 0)
+        {
+                print OUT "$param $value\n";
+        }
+        close OUT;
+}
+
