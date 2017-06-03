@@ -22,6 +22,7 @@ my $CONFIG = "/etc/server_build.cfg";
 &manage_config($CONFIG);
 
 # == read the config
+my %Q;
 open(IN,"$CONFIG");
 foreach my $l (<IN>)
 {
