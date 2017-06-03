@@ -131,7 +131,7 @@ sub setup_web
         &run("a2enmod cache");
         &run("a2enmod headers");
 
-        &param("/etc/apache2/sites-enabled/000-default.conf","DocumentRoot",$CONFIG{WWWROOT});
+        &param("/etc/apache2/sites-enabled/000-default.conf","DocumentRoot",$Q{WWWROOT});
 
 #        print "We will now generate the default SSL certificate...\n";
 
