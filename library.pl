@@ -80,7 +80,7 @@ sub manage_config
 	$Q{WWWGROUP} = &ask("Enter the name of the web group","webmasters",$Q{WWWGROUP});
 	$Q{ROLEWEB} = &ask("Will this be a web server?","Y",$Q{ROLEWEB});
 	$Q{ROLEDB} = &ask("Will this be a database?","Y",$Q{ROLEDB});
-	$Q{ROLEMAIL} = &ask("Will this be a mail server (outbound)?","Y",$Q{ROLEDB});
+	$Q{ROLEMAIL} = &ask("Will this be a mail server (outbound)?","Y",$Q{ROLEMAIL});
 
 	# -- write the config file to the disk
 	open(OUT,">$CONFIG_FILE") || die "Can't write config file - $!";
