@@ -36,3 +36,22 @@ foreach my $l (<IN>)
   &log("config : $a = $b");
 }
 close IN;
+
+# == get the system ready
+&run("apt-get update");
+
+# == start installing packages
+open(IN,"packages.cfg");
+foreach my $a (<IN>)
+{
+	chomp($a);
+	my ($v,$r,$p) = split(/\;/,$a);
+	
+	#TODO - check the role
+	if(($v eq '*' || $v eq $VER) && ($r eq '*'))
+	{
+		&run("apt-get -y install $p");
+	}
+}
+
+
