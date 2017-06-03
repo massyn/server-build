@@ -1,18 +1,37 @@
 #!/usr/bin/perl
 
+use strict;
+
+do './library.pl';
+
+&log("Starting $0");
+# == check if we are running with a sudo'ed root
+&check_sudo();
+
+# == before we do anything else, let's check the Ubuntu version
+my $VER = &ubuntu_version();
+
+if($VER eq 'unknown')
+{
+  die "Sorry, but this version of Ubuntu is not supported.";
+}
+
 sub setup_sshd
 {
-        # == Install OpenSSH server
-
-
+        if(!-f "/etc/ssh/sshd_config")
+        {
+                die "sshd_config not found!";
+        }
+        
         &param("/etc/ssh/sshd_config","PermitRootLogin","no");
         &param("/etc/ssh/sshd_config","X11Forwarding","no");
-        &param("/etc/ssh/sshd_config","ChallengeResponseAuthentication","yes"); # need this for Google Authenticator
+        &param("/etc/ssh/sshd_config","ChallengeResponseAuthentication","yes");
         #&param("/etc/ssh/sshd_config","ClientAliveInterval","300");
         #&param("/etc/ssh/sshd_config","ClientAliveCountMax","0");
         &param("/etc/ssh/sshd_config","IgnoreRhosts","yes");
         &param("/etc/ssh/sshd_config","HostbasedAuthentication","no");
-        &param("/etc/ssh/sshd_config","Port",$CONFIG{SSHPORT});
+        my $port = &ask("Enter a different SSH port name",1022,1022);
+        &param("/etc/ssh/sshd_config","Port",$port);
         &param("/etc/ssh/sshd_config","PermitEmptyPasswords","no");
         &param("/etc/ssh/sshd_config","Banner","/etc/issue");
         &param("/etc/ssh/sshd_config","AllowTcpForwarding","no");
