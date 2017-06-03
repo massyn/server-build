@@ -21,7 +21,8 @@ sub run
 	my ($cmd) = @_;
 
 	&log("Running : $cmd");
-	system($cmd);
+
+system($cmd);
 	&log("  - Return : $?");
 }
 
@@ -90,5 +91,40 @@ sub manage_config
 	close OUT;
 
 	return %Q;
+}
+
+sub ask
+{
+        my ($q,$d,$c) = @_;
+
+	if($c ne '')
+	{
+		return $c;
+	}
+
+        chomp($d);
+
+        print "$q --> ";
+
+        if($d ne '')
+        {
+                print "[$d] ";
+        }
+
+        my $ans = <STDIN>;
+        chomp($ans);
+
+        my $result;
+        if($ans eq '' && $d ne '')
+        {
+                $result = $d;
+        }
+        else
+        {
+                $result = $ans;
+        }
+
+        print "You picked - $result\n";
+        return $result;
 }
 
