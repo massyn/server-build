@@ -3,7 +3,7 @@
 
 use strict;
 
-do "library.pl";
+do './library.pl';
 
 # == check if we are running with a sudo'ed root
 &check_sudo();
@@ -18,4 +18,4 @@ if($VER eq 'unknown')
 
 my $CONFIG = "/etc/server_build.cfg";
 
-&manager_config($CONFIG);
+&manage_config($CONFIG);
