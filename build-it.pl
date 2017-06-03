@@ -4,6 +4,7 @@
 use strict;
 
 do './library.pl';
+&log("Starting $0");
 
 # == check if we are running with a sudo'ed root
 &check_sudo();
@@ -19,3 +20,18 @@ if($VER eq 'unknown')
 my $CONFIG = "/etc/server_build.cfg";
 
 &manage_config($CONFIG);
+
+# == read the config
+open(IN,"$CONFIG");
+foreach my $l (<IN>)
+{
+  chomp($l);
+  if($l eq '' || $l =~ /^#/)
+  {
+    next;
+  }
+  my ($a,$b) = split(/\=/,$l,2);
+  $Q{$a} = $b;
+  &log("config : $a = $b");
+}
+close IN;
