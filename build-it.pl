@@ -1,3 +1,4 @@
+
 #!/usr/bin/perl
 # == the main build file
 
@@ -48,7 +49,7 @@ foreach my $a (<IN>)
 	my ($v,$r,$p) = split(/\;/,$a);
 	
 	#TODO - check the role
-	if(($v eq '*' || $v eq $VER) && ($r eq '*'))
+	if(($v eq '*' || $v eq $VER) && (($r eq '*') || ($r eq 'db' && $Q{ROLEDB} =~ /y/i) ))
 	{
 		&run("apt-get -y install $p");
 	}
