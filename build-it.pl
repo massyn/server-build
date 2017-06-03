@@ -97,7 +97,7 @@ sub setup_web
         if(!-d "$Q{WWWROOT}/$Q{HOSTNAME}.$Q{DOMAIN}")
         {
                 &run("mkdir $Q{WWWROOT}/$Q{HOSTNAME}.$Q{DOMAIN}");
-        }
+	}
 
 	&run("getent group $Q{WWWGROUP} || groupadd $Q{WWWGROUP}");
 
@@ -133,17 +133,16 @@ sub setup_web
 
         &param("/etc/apache2/sites-enabled/000-default.conf","DocumentRoot",$CONFIG{WWWROOT});
 
-        print "We will now generate the default SSL certificate...\n";
+#        print "We will now generate the default SSL certificate...\n";
 
-        if(!-d "letsencrypt")
-        {
-                &run("git clone https://github.com/letsencrypt/letsencrypt");
-        }
+ #       if(!-d "letsencrypt")
+ #       {
+ #               &run("git clone https://github.com/letsencrypt/letsencrypt");
+ #       }
 
-        open(APACHE,">/etc/apache2/apache2.conf");
-        print APACHE &apacheconf($CONFIG{WWWROOT});
-        close APACHE;
-
+	&write_template("apache.conf","/etc/apache2/apache2.conf", { WWWROOT => $Q{WWWROOT} });
+	
+        
         # == disable server tokens
 
         &param("/etc/apache2/conf-enabled/security.conf","ServerTokens","Prod");
