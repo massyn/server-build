@@ -21,6 +21,7 @@ my $CONFIG = "/etc/server_build.cfg";
 
 &manage_config($CONFIG);
 
+
 # == read the config
 my %Q;
 open(IN,"$CONFIG");
@@ -77,4 +78,75 @@ sub setup_basics
 
         &run("figlet $SERVERNAME > /etc/motd");
         &run("echo Authorised Users Only > /etc/issue");
+}
+
+
+sub setup_web
+{
+        if(!-d "/etc/apache2/ssl")
+        {
+                &run("mkdir /etc/apache2/ssl");
+        }
+
+        if(!-d $Q{WWWROOT})
+        {
+                &run("mkdir $Q{WWWROOT}");
+        }
+
+        # -- setup the basic website
+        if(!-d "$Q{WWWROOT}/$Q{HOSTNAME}.$Q{DOMAIN}")
+        {
+                &run("mkdir $Q{WWWROOT}/$Q{HOSTNAME}.$Q{DOMAIN}");
+        }
+
+	&run("getent group $Q{WWWGROUP} || groupadd $Q{WWWGROUP}");
+
+        &run("chown $Q{WWWUSER}:$Q{WWWGROUP} $Q{WWWROOT}");
+        &run("chmod 770 $Q{WWWROOT}");
+        &run("chown -R $Q{WWWUSER}:$Q{WWWGROUP} $Q{WWWROOT}");
+        &run("chmod -R 770 $Q{WWWROOT}");
+
+        # == allow webmasters to read the web server logs -- part of their role
+        &run("chown -R root:$Q{WWWGROUP} /var/log/apache2");
+
+        # -- add the current admin user to the $WWWUSER group
+
+        &run("usermod -a -G $Q{WWWGROUP} $ENV{SUDO_USER}");
+        &run("usermod -a -G $Q{WWWGROUP} $Q{WWWUSER}");
+
+        &run("service apache2 stop");
+        if(`ps -ef |grep apache | grep -v grep` =~ /apache/)
+        {
+                &run("kill -9 \`ps -ef |grep apache | grep -v grep | awk {'print \$2'}\`")
+        }
+
+	my $phpini = "/etc/php/7.0/apache2/php.ini";
+
+        &param($phpini,"expose_php"," = Off");
+        &addline($phpini,"extension=php_mysqli.so");
+
+        &run("a2enmod ssl");
+        &run("a2enmod rewrite");
+        &run("a2enmod cgi");
+        &run("a2enmod cache");
+        &run("a2enmod headers");
+
+        &param("/etc/apache2/sites-enabled/000-default.conf","DocumentRoot",$CONFIG{WWWROOT});
+
+        print "We will now generate the default SSL certificate...\n";
+
+        if(!-d "letsencrypt")
+        {
+                &run("git clone https://github.com/letsencrypt/letsencrypt");
+        }
+
+        open(APACHE,">/etc/apache2/apache2.conf");
+        print APACHE &apacheconf($CONFIG{WWWROOT});
+        close APACHE;
+
+        # == disable server tokens
+
+        &param("/etc/apache2/conf-enabled/security.conf","ServerTokens","Prod");
+        &param("/etc/apache2/conf-enabled/security.conf","ServerSignature","Off");
+
 }
