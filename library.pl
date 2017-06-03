@@ -189,3 +189,14 @@ sub param
         close OUT;
 }
 
+sub write_template
+{
+	my ($input,$output,$ref) = @_;
+	
+	my %variables = %$ref;
+	
+	foreach my $v (keys %variables)
+	{
+		print "$v ==> $variables{$v}\n";
+	}
+}
