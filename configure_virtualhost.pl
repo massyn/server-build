@@ -6,6 +6,9 @@ use strict;
 do './library.pl';
 &log("Starting $0");
 
+my $newsite = $ARGV[0];
+my $usessl = $ARGV[1];
+
 # == check if we are running with a sudo'ed root
 &check_sudo();
 # == before we do anything else, let's check the Ubuntu version
@@ -22,10 +25,8 @@ my %Q = &manage_config($CONFIG);
 if($Q{ROLEWEB} =~ /y/i)
 {
 	# == did we get a FQDN from the command line?
-	if($ARGV[0] ne '')
-	{
-		my $newsite = $ARGV[0];
-		
+	if($newsite ne '')
+	{	
 		if(-d "$Q{WWWROOT}/$newsite")
 		{
 			&log("ERROR - can not create new site $newsite because the directory $Q{WWWROOT}/$newsite already exists");
@@ -34,6 +35,18 @@ if($Q{ROLEWEB} =~ /y/i)
 		{
 			mkdir "$Q{WWWROOT}/$newsite";
 		}
+	}
+	
+	# == put Let's Encrypt on the machine, if we need to use SSL
+	if($usessl =~ /y/i)
+	{
+		# == clone Let's encrypt
+		if(!-d "~letsencrypt")
+		{
+			system("git clone https://github.com/letsencrypt/letsencrypt ~/letsencrypt");
+		}
+	}	
+$ ./letsencrypt/letsencrypt-auto certonly --standalone -d newsite.example.com --email youremail@ddress.com --renew-by-default
 	}
 	&www_virtualhost(\%Q);
 }
