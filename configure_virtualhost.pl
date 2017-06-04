@@ -19,4 +19,4 @@ if($VER eq 'unknown')
 my $CONFIG = "/etc/server_build.cfg";
 my %Q = &manage_config($CONFIG);
 
-&www_virtualhost($Q{WWWROOT});
+&www_virtualhost(\%Q);
