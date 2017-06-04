@@ -229,11 +229,13 @@ sub write_template
 
 sub www_virtualhost
 {
-	my ($WWWROOT) = @_;
+	my ($ref) = @_;
+	my %Q = %{$ref};
+	
 	&log("Generating virtualhosts");
 	
 	# == cycle through all the directories in wwwroot (each of them are a seperate site)
-	opendir(DIR,$WWWROOT) || &log("ERROR - can not read $WWWROOT");
+	opendir(DIR,$Q{WWWROOT}) || &log("ERROR - can not read $Q{WWWROOT}");
 	foreach my $w (readdir(DIR))
 	{
 		chomp($w);
@@ -243,7 +245,7 @@ sub www_virtualhost
 		}
 		else
 		{
-			my $fdir = "$WWWROOT/$w";	# this is the website's full directory
+			my $fdir = "$Q{WWWROOT}/$w";	# this is the website's full directory
 			
 			# == only touch directories
 			if(-d $fdir)
@@ -279,7 +281,7 @@ sub www_virtualhost
 
 				# == set the permissions
 				
-                		#&run("chown -R $CONFIG{WWWUSER}:$CONFIG{WWWGROUP} $CONFIG{WWWROOT}/$site");
+                		&run("chown -R $Q{WWWUSER}:$Q{WWWGROUP} $fdir");
                 		&run("chmod -R 770 $fdir");
 
 
