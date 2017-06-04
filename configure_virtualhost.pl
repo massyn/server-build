@@ -19,4 +19,11 @@ if($VER eq 'unknown')
 my $CONFIG = "/etc/server_build.cfg";
 my %Q = &manage_config($CONFIG);
 
-&www_virtualhost(\%Q);
+if($Q{ROLEWEB} =~ /y/i)
+{
+	&www_virtualhost(\%Q);
+}
+else
+{
+	&log("This machine is not designated as a web server.  If you decide to change the role, update the config file $CONFIG");
+}
