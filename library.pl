@@ -276,32 +276,25 @@ sub www_virtualhost
 				}
 				
 				# == Create an .htaccess file to redirect all traffic to SSL
-				#if(!-f "$WWW/.htaccess")
-                		#{
-				#	&log(" - Creating .htaccess");
-                        	#	open(HT,">$WWW/.htaccess");
-                        	#	print HT "RewriteEngine On\n";
-                        	#	print HT "RewriteCond \%{HTTPS} !=on\n";
-                        	#	print HT "RewriteRule \^\/\?(.*) https://\%{SERVER_NAME}/\$1 [R,L]\n";
-                        	#	close HT;
-				#}
-                	
-
-				# == set the permissions
-				
-                		&run("chown -R $Q{WWWUSER}:$Q{WWWGROUP} $fdir");
+				if(-f "/etc/letsencrypt/live/$w/cert.pem")
+				{
+					if(!-f "$WWW/.htaccess")
+                			{
+						&log(" - Creating .htaccess");
+                        			open(HT,">$WWW/.htaccess");
+                        			print HT "RewriteEngine On\n";
+                        			print HT "RewriteCond \%{HTTPS} !=on\n";
+                        			print HT "RewriteRule \^\/\?(.*) https://\%{SERVER_NAME}/\$1 [R,L]\n";
+                        			close HT;
+					}
+				}
+                		# == set the permissions
+				&run("chown -R $Q{WWWUSER}:$Q{WWWGROUP} $fdir");
                 		&run("chmod -R 770 $fdir");
 
 				# == write the config
 				$Q{URL} = $w;
-				print APA &generate_template('virtualhost.cfg',\%Q);
-
-				# == do we need to use SSL?
-				# TODO = fix this - don't read the argv again -- this is nasty
-				if($ARGV[1] =~ /y/)
-				{
-					system("~/letsencrypt/letsencrypt-auto certonly --standalone -d $w --email $Q{ADMIN} --renew-by-default");
-				}
+				print APA &generate_template('virtualhost.cfg',\%Q)
 				
 				# == do we have a Lets Encrypt certificate ?  Use it!
 				if(-f "/etc/letsencrypt/live/$w/cert.pem")
