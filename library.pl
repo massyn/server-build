@@ -192,6 +192,7 @@ sub param
 
 sub write_template
 {
+	&log("Writing template - $input");
 	my ($input,$output,$ref) = @_;
 	
 	my %variables = %$ref;
@@ -204,9 +205,13 @@ sub write_template
 	}
 	close IN;
 
-	close IN;
+	# == replace the contents
 	foreach my $v (keys %variables)
 	{
-		print "$v ==> $variables{$v}\n";
+		$data =~ s/\%$v\%/$variables{$v}/g;
 	}
+	
+	open(OUT,">$output") || &log("ERROR - Can not write $output - $?");
+	print OUT $data;
+	close OUT;
 }
