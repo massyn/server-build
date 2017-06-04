@@ -294,7 +294,7 @@ sub www_virtualhost
 
 				# == write the config
 				$Q{URL} = $w;
-				print APA &generate_template('virtualhost.cfg',\%Q)
+				print APA &generate_template('virtualhost.cfg',\%Q);
 				
 				# == do we have a Lets Encrypt certificate ?  Use it!
 				if(-f "/etc/letsencrypt/live/$w/cert.pem")
