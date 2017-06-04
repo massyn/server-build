@@ -86,11 +86,14 @@ sub setup_basics
 
         &run("figlet $SERVERNAME > /etc/motd");
         &run("echo Authorised Users Only > /etc/issue");
+
 }
 
 
 sub setup_web
 {
+	&run("service apache2 stop");
+	
         if(!-d "/etc/apache2/ssl")
         {
                 &run("mkdir /etc/apache2/ssl");
@@ -156,4 +159,5 @@ sub setup_web
         &param("/etc/apache2/conf-enabled/security.conf","ServerTokens","Prod");
         &param("/etc/apache2/conf-enabled/security.conf","ServerSignature","Off");
 
+	&run("service apache2 start");
 }
