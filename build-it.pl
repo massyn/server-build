@@ -19,7 +19,7 @@ if($VER eq 'unknown')
 
 my $CONFIG = "/etc/server_build.cfg";
 
-&manage_config($CONFIG);
+my %Q = &manage_config($CONFIG);
 
 
 # == read the config
