@@ -46,8 +46,6 @@ if($Q{ROLEWEB} =~ /y/i)
 			system("git clone https://github.com/letsencrypt/letsencrypt ~/letsencrypt");
 		}
 	}	
-$ ./letsencrypt/letsencrypt-auto certonly --standalone -d newsite.example.com --email youremail@ddress.com --renew-by-default
-	}
 	&www_virtualhost(\%Q);
 }
 else
