@@ -190,7 +190,7 @@ sub param
                 }
                 else
                 {
-                        print OUT "$a\n";
+			print OUT "$a\n";
                 }
         }
 
@@ -201,9 +201,9 @@ sub param
         close OUT;
 }
 
-sub write_template
+sub generate_template
 {
-	my ($input,$output,$ref) = @_;
+	my ($input,$ref) = @_;
 
 	&log("Writing template - $input");
 	my %variables = %$ref;
@@ -222,8 +222,15 @@ sub write_template
 		$data =~ s/\%$v\%/$variables{$v}/g;
 	}
 	
+	return $data;
+}
+
+sub write_template
+{
+	my ($input,$output,$ref) = @_;
+	
 	open(OUT,">$output") || &log("ERROR - Can not write $output - $?");
-	print OUT $data;
+	print OUT &generate_template($input,$output,$ref);
 	close OUT;
 }
 
