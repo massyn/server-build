@@ -238,8 +238,13 @@ sub www_virtualhost
 		}
 		else
 		{
+			my $fdir = "$WWWROOT/$w";
+			
 			# == only touch directories
-			&log(" - Setting up virtual host $w");
+			if(-d $fdir)
+			{
+				&log(" - Setting up virtual host $w in $fdir");
+			}	
 		}
 	}
 	closedir(DIR);
