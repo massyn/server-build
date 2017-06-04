@@ -301,4 +301,7 @@ sub www_virtualhost
 	}
 	closedir(DIR);
 	close APA;
+	
+	&run("service apache2 stop");
+	&run("service apache2 start");
 }
