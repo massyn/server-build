@@ -131,15 +131,7 @@ sub setup_web
 
         &param("/etc/apache2/sites-enabled/000-default.conf","DocumentRoot",$Q{WWWROOT});
 
-#        print "We will now generate the default SSL certificate...\n";
-
- #       if(!-d "letsencrypt")
- #       {
- #               &run("git clone https://github.com/letsencrypt/letsencrypt");
- #       }
-
 	&write_template("apache.conf","/etc/apache2/apache2.conf", { WWWROOT => $Q{WWWROOT} });
-	
         
         # == disable server tokens
 
