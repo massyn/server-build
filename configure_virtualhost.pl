@@ -21,6 +21,20 @@ my %Q = &manage_config($CONFIG);
 
 if($Q{ROLEWEB} =~ /y/i)
 {
+	# == did we get a FQDN from the command line?
+	if($ARGV[0] ne '')
+	{
+		my $newsite = $ARGV[0];
+		
+		if(-d "$Q{WWWROOT}/$newsite")
+		{
+			&log("ERROR - can not create new site $newsite because the directory $Q{WWWROOT}/$newsite already exists");
+		}
+		else
+		{
+			mkdir "$Q{WWWROOT}/$newsite";
+		}
+	}
 	&www_virtualhost(\%Q);
 }
 else
