@@ -22,8 +22,13 @@ sub run
 
 	&log("Running : $cmd");
 
-system($cmd);
+	system($cmd);
 	&log("  - Return : $?");
+	if($? != 0)
+	{
+		&log("ERROR - command failed.  Press enter to continue.");
+		<STDIN>;
+	}
 }
 
 sub log
