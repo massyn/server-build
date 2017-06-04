@@ -163,7 +163,7 @@ sub param
 {
         my ($file,$param,$value) = @_;
 
-        print "Checking file $file for $param as $value\n";
+        &log("Checking file $file for $param as $value");
         my $data;
         open(IN,"$file") || die "Can not read $file - $!";
         foreach my $a (<IN>)
