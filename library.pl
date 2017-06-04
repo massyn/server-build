@@ -83,6 +83,7 @@ sub manage_config
 	$Q{DOMAIN}  = &ask("Enter your domain name",`domainname`,$Q{DOMAIN});
 	$Q{ADMIN} = &ask("Enter the admin email address",'',$Q{ADMIN});
 	$Q{WWWGROUP} = &ask("Enter the name of the web group","webmasters",$Q{WWWGROUP});
+	$Q{WWWUSER} = &ask("Enter the username of the default web user","www-data",$Q{WWWUSER});
 	$Q{WWWROOT} = &ask("Enter the path where the web server files will be stored","/wwwroot",$Q{WWWROOT});
 	$Q{ROLEWEB} = &ask("Will this be a web server?","Y",$Q{ROLEWEB});
 	$Q{ROLEDB} = &ask("Will this be a database?","Y",$Q{ROLEDB});
