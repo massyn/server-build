@@ -238,12 +238,46 @@ sub www_virtualhost
 		}
 		else
 		{
-			my $fdir = "$WWWROOT/$w";
+			my $fdir = "$WWWROOT/$w";	# this is the website's full directory
 			
 			# == only touch directories
 			if(-d $fdir)
 			{
 				&log(" - Setting up virtual host $w in $fdir");
+			
+				my $WWW = "$fdir/www";	# store the actual website in www
+				my $LOG = "$fdir/log";	# store all the logs in log
+				
+				# == create the directories that do not exist
+				if(!-d $WWW)
+				{
+					&log(" - Creating directory $WWW");
+					mkdir $WWW;
+				}
+				if(!-d $LOG)
+				{
+					&log(" - Creating directory $LOG");
+					mkdir $LOG;
+				}
+				
+				# == Create an .htaccess file (if it doesn't exist)
+				if(!-f "$WWW/.htaccess")
+                		{
+					&log(" - Creating .htaccess");
+                        		open(HT,">$WWW/.htaccess");
+                        		print HT "RewriteEngine On\n";
+                        		print HT "RewriteCond \%{HTTPS} !=on\n";
+                        		print HT "RewriteRule \^\/\?(.*) https://\%{SERVER_NAME}/\$1 [R,L]\n";
+                        		close HT;
+				}
+                	
+
+				# == set the permissions
+				
+                		#&run("chown -R $CONFIG{WWWUSER}:$CONFIG{WWWGROUP} $CONFIG{WWWROOT}/$site");
+                		&run("chmod -R 770 $fdir);
+
+
 			}	
 		}
 	}
