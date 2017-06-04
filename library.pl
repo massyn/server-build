@@ -260,22 +260,22 @@ sub www_virtualhost
 					mkdir $LOG;
 				}
 				
-				# == Create an .htaccess file (if it doesn't exist)
-				if(!-f "$WWW/.htaccess")
-                		{
-					&log(" - Creating .htaccess");
-                        		open(HT,">$WWW/.htaccess");
-                        		print HT "RewriteEngine On\n";
-                        		print HT "RewriteCond \%{HTTPS} !=on\n";
-                        		print HT "RewriteRule \^\/\?(.*) https://\%{SERVER_NAME}/\$1 [R,L]\n";
-                        		close HT;
-				}
+				# == Create an .htaccess file to redirect all traffic to SSL
+				#if(!-f "$WWW/.htaccess")
+                		#{
+				#	&log(" - Creating .htaccess");
+                        	#	open(HT,">$WWW/.htaccess");
+                        	#	print HT "RewriteEngine On\n";
+                        	#	print HT "RewriteCond \%{HTTPS} !=on\n";
+                        	#	print HT "RewriteRule \^\/\?(.*) https://\%{SERVER_NAME}/\$1 [R,L]\n";
+                        	#	close HT;
+				#}
                 	
 
 				# == set the permissions
 				
                 		#&run("chown -R $CONFIG{WWWUSER}:$CONFIG{WWWGROUP} $CONFIG{WWWROOT}/$site");
-                		&run("chmod -R 770 $fdir);
+                		&run("chmod -R 770 $fdir");
 
 
 			}	
