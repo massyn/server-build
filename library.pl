@@ -261,7 +261,7 @@ sub www_virtualhost
 				&log(" - Setting up virtual host $w in $fdir");
 			
 				my $WWW = "$fdir/www";	# store the actual website in www
-				my $LOG = "$fdir/log";	# store all the logs in log
+				my $LOG = "$fdir/logs";	# store all the logs in log
 				
 				# == create the directories that do not exist
 				if(!-d $WWW)
