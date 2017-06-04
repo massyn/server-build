@@ -27,15 +27,14 @@ my %Q;
 open(IN,"$CONFIG");
 foreach my $l (<IN>)
 {
-  chomp($l);
-
-if($l eq '' || $l =~ /^#/)
-  {
-    next;
-  }
-  my ($a,$b) = split(/\=/,$l,2);
-  $Q{$a} = $b;
-  &log("config : $a = $b");
+	chomp($l);
+	if($l eq '' || $l =~ /^#/)
+	{
+		next;
+	}
+	my ($a,$b) = split(/\=/,$l,2);
+	$Q{$a} = $b;
+	&log("config : $a = $b");
 }
 close IN;
 
