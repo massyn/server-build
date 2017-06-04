@@ -62,6 +62,11 @@ sub manage_config
 	my ($CONFIG_FILE) = @_;
 	my %Q;
 
+	if($CONFIG_FILE eq '')
+	{
+		&log("WARNING - manage_config needs a config file - defaulting to /etc/server_build.cfg");
+		$CONFIG_FILE = "/etc/server_build.cfg";
+	}
 	# -- if there is a config file, read it
 	if(-f $CONFIG_FILE)
 	{
