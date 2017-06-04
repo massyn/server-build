@@ -51,7 +51,7 @@ if($Q{ROLEWEB} =~ /y/i)
 	&log(" == Building the web server == ");
 	
 	&setup_web();
-	&www_virtualhost($Q{WWWROOT});
+	&www_virtualhost(\%Q);
 }
 
 &log(" ===== ALL DONE ===== ");
