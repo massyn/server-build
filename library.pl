@@ -170,7 +170,7 @@ sub param
         foreach my $a (<IN>)
         {
                 $data .= $a;
-        }
+	}
         close IN;
 
         my $tag = 0;
@@ -220,4 +220,27 @@ sub write_template
 	open(OUT,">$output") || &log("ERROR - Can not write $output - $?");
 	print OUT $data;
 	close OUT;
+}
+
+sub www_virtualhost
+{
+	my ($WWWROOT) = @_;
+	&log("Generating virtualhosts");
+	
+	# == cycle through all the directories in wwwroot (each of them are a seperate site)
+	opendir(DIR,$WWWROOT) || &log("ERROR - can not read $WWWROOT");
+	foreach my $w (readdir(DIR))
+	{
+		chomp($w);
+		if($w eq '.' || $w eq '..')
+		{
+			# skipping
+		}
+		else
+		{
+			# == only touch directories
+			&log(" - Setting up virtual host $w");
+		}
+	}
+	closediR(DIR);
 }
