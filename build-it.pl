@@ -17,26 +17,9 @@ if($VER eq 'unknown')
   die "Sorry, but this version of Ubuntu is not supported.";
 }
 
-my $CONFIG = "/etc/server_build.cfg";
-
-my %Q = &manage_config($CONFIG);
-
-
 # == read the config
-my %Q;
-open(IN,"$CONFIG");
-foreach my $l (<IN>)
-{
-	chomp($l);
-	if($l eq '' || $l =~ /^#/)
-	{
-		next;
-	}
-	my ($a,$b) = split(/\=/,$l,2);
-	$Q{$a} = $b;
-	&log("config : $a = $b");
-}
-close IN;
+my $CONFIG = "/etc/server_build.cfg";
+my %Q = &manage_config($CONFIG);
 
 # == get the system ready
 &run("apt-get update");
