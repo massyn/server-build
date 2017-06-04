@@ -15,24 +15,8 @@ if($VER eq 'unknown')
 	die "Sorry, but this version of Ubuntu is not supported.";
 }
 
+# == manage the config
 my $CONFIG = "/etc/server_build.cfg";
-
-&manage_config($CONFIG);
-
-# == read the config
-my %Q;
-open(IN,"$CONFIG");
-foreach my $l (<IN>)
-{
-  chomp($l);
-if($l eq '' || $l =~ /^#/)
-  {
-    next;
-  }
-  my ($a,$b) = split(/\=/,$l,2);
-  $Q{$a} = $b;
-  &log("config : $a = $b");
-}
-close IN;
+my %Q = &manage_config($CONFIG);
 
 &www_virtualhost($Q{WWWROOT});
