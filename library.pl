@@ -241,6 +241,7 @@ sub www_virtualhost
 	
 	&log("Generating virtualhosts");
 	
+	open(APA,">/etc/apache2/sites-enabled/000-default.conf") || &log("ERROR - Can not write 000-default.conf");
 	# == cycle through all the directories in wwwroot (each of them are a seperate site)
 	opendir(DIR,$Q{WWWROOT}) || &log("ERROR - can not read $Q{WWWROOT}");
 	foreach my $w (readdir(DIR))
@@ -291,9 +292,13 @@ sub www_virtualhost
                 		&run("chown -R $Q{WWWUSER}:$Q{WWWGROUP} $fdir");
                 		&run("chmod -R 770 $fdir");
 
+				# == write the config
+				$Q{URL} = $w;
+				print APA &generate_template('virtualhost.cfg',\%Q);
 
 			}	
 		}
 	}
 	closedir(DIR);
+	close APA;
 }
