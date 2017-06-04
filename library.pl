@@ -230,7 +230,7 @@ sub write_template
 	my ($input,$output,$ref) = @_;
 	
 	open(OUT,">$output") || &log("ERROR - Can not write $output - $?");
-	print OUT &generate_template($input,$output,$ref);
+	print OUT &generate_template($input,$ref);
 	close OUT;
 }
 
