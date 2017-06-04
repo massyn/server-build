@@ -197,9 +197,9 @@ sub param
 
 sub write_template
 {
-	&log("Writing template - $input");
 	my ($input,$output,$ref) = @_;
-	
+
+	&log("Writing template - $input");
 	my %variables = %$ref;
 	
 	my $data;	
