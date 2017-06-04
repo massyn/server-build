@@ -196,6 +196,15 @@ sub write_template
 	
 	my %variables = %$ref;
 	
+	my $data;	
+	open(IN,$input) || &log("ERROR - Can not read $input - $?");
+	foreach my $l (<IN>)
+	{
+		$data .= $l;			
+	}
+	close IN;
+
+	close IN;
 	foreach my $v (keys %variables)
 	{
 		print "$v ==> $variables{$v}\n";
