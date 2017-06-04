@@ -175,7 +175,7 @@ sub param
 
         my $tag = 0;
         open(OUT,">$file") || die "Oh dear - $!";
-        foreach my $a (split(/\n/,$data))
+	foreach my $a (split(/\n/,$data))
         {
                 chomp($a);
                 if($a =~ /$param/i)
@@ -242,5 +242,5 @@ sub www_virtualhost
 			&log(" - Setting up virtual host $w");
 		}
 	}
-	closediR(DIR);
+	closedir(DIR);
 }
