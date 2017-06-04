@@ -296,6 +296,18 @@ sub www_virtualhost
 				$Q{URL} = $w;
 				print APA &generate_template('virtualhost.cfg',\%Q);
 
+				# == do we need to use SSL?
+				# TODO = fix this - don't read the argv again -- this is nasty
+				if($ARGV[1] =~ /y/)
+				{
+					system("~/letsencrypt/letsencrypt-auto certonly --standalone -d $w --email $Q{ADMIN} --renew-by-default");
+				}
+				
+				# == do we have a Lets Encrypt certificate ?  Use it!
+				if(-f "/etc/letsencrypt/live/$w/cert.pem")
+				{
+					print APA &generate_template('virtualhost_ssl.cfg',\%Q);	
+				}
 			}	
 		}
 	}
