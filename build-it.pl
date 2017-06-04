@@ -24,9 +24,6 @@ my %Q = &manage_config($CONFIG);
 # == get the system ready
 &run("apt-get update");
 
-# == configure some of the basics
-&setup_basics($Q{HOSTNAME},$Q{DOMAIN});
-
 # == start installing packages
 open(IN,"packages.cfg");
 foreach my $a (<IN>)
@@ -46,6 +43,10 @@ foreach my $a (<IN>)
 	}
 }
 
+# == configure some of the basics
+&setup_basics($Q{HOSTNAME},$Q{DOMAIN});
+
+# == configure the web server
 if($Q{ROLEWEB} =~ /y/i)
 {
 	&log(" == Building the web server == ");
@@ -53,6 +54,9 @@ if($Q{ROLEWEB} =~ /y/i)
 	&setup_web();
 	&www_virtualhost(\%Q);
 }
+
+#&run("apt-get -y upgrade");
+&run("apt-get -y autoremove");
 
 &log(" ===== ALL DONE ===== ");
 
