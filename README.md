@@ -16,6 +16,7 @@ $ usermod -a -G sudo myuser
 * Install a fresh Ubuntu server image (Currently, 17.04)
 * $ git clone https://github.com/massyn/server-build.git
 * $ cd server-build
+* $ chmod +x *.pl
 * $ sudo ./build-it.pl
 
 ## Operations
