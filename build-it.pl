@@ -55,6 +55,8 @@ if($Q{ROLEWEB} =~ /y/i)
 	&www_virtualhost(\%Q);
 }
 
+&setup_sshd();
+
 #&run("apt-get -y upgrade");
 &run("apt-get -y autoremove");
 
@@ -75,7 +77,6 @@ sub setup_basics
         &run("echo Authorised Users Only > /etc/issue");
 
 }
-
 
 sub setup_web
 {
@@ -139,4 +140,28 @@ sub setup_web
         &param("/etc/apache2/conf-enabled/security.conf","ServerSignature","Off");
 
 	&run("service apache2 start");
+}
+
+sub setup_sshd
+{
+        if(!-f "/etc/ssh/sshd_config")
+        {
+                &log("sshd_config not found!");
+        }
+        else
+        {
+          &param("/etc/ssh/sshd_config","PermitRootLogin","no");
+          &param("/etc/ssh/sshd_config","X11Forwarding","no");
+          &param("/etc/ssh/sshd_config","ChallengeResponseAuthentication","yes");
+          #&param("/etc/ssh/sshd_config","ClientAliveInterval","300");
+          #&param("/etc/ssh/sshd_config","ClientAliveCountMax","0");
+          &param("/etc/ssh/sshd_config","IgnoreRhosts","yes");
+          &param("/etc/ssh/sshd_config","HostbasedAuthentication","no");
+          my $port = &ask("Enter a different SSH port name",1022,1022);
+          &param("/etc/ssh/sshd_config","Port",$port);
+          &param("/etc/ssh/sshd_config","PermitEmptyPasswords","no");
+          &param("/etc/ssh/sshd_config","Banner","/etc/issue");
+          &param("/etc/ssh/sshd_config","AllowTcpForwarding","no");
+          &param("/etc/ssh/sshd_config","LoginGraceTime","30s");
+        }
 }
