@@ -119,7 +119,7 @@ sub setup_web
                 &run("kill -9 \`ps -ef |grep apache | grep -v grep | awk {'print \$2'}\`")
         }
 
-	my $phpini = "/etc/php/7.0/apache2/php.ini";
+	my $phpini = "/etc/php/7.1/apache2/php.ini";
 
         &param($phpini,"expose_php"," = Off");
         &addline($phpini,"extension=php_mysqli.so");
