@@ -5,7 +5,7 @@ A set of scripts used to build a standard, hardened Linux based web server
 ## How to use
 ### DigitalOcean
 When utilizing Virtual Machines from Digital Ocean, you need to perform the following steps.
-* Create a new Virtual Machine image, with the Ubuntu 17.04 image.  As soon as the VM is created, DigitalOcean will email you the root password.
+* Create a new Virtual Machine image, with the Ubuntu 17.10 image.  As soon as the VM is created, DigitalOcean will email you the root password.
 * As soon as you have logged on as root, create a new user account.  In this example, change "myuser" to the new user account.
 $ adduser -a myuser
 * Add the user to the sudo group
