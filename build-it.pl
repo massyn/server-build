@@ -163,5 +163,6 @@ sub setup_sshd
           &param("/etc/ssh/sshd_config","Banner","/etc/issue");
           &param("/etc/ssh/sshd_config","AllowTcpForwarding","no");
           &param("/etc/ssh/sshd_config","LoginGraceTime","30s");
+	  &param("/etc/ssh/sshd_config","AuthorizedKeysFile","%h/.ssh/authorized_keys");
         }
 }
