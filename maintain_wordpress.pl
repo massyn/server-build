@@ -29,10 +29,10 @@ if($Q{ROLEWEB} =~ /y/i)
   }
   
   # find all sites that could host wordpress
-  opendir(DIR,"$CONFIG{WWWROOT}");
+  opendir(DIR,"$Q{WWWROOT}");
   foreach my $d (readdir(DIR))
   {
-    my $dir = "$CONFIG{WWWROOT}/$d";
+    my $dir = "$Q{WWWROOT}/$d";
     print "$dir\n";
     if(-f "$dir/wp-config.php")
     {
