@@ -27,6 +27,8 @@ $ usermod -a -G sudo myuser
 * Allow the use of snort to act as a WAF
 * Allow the automatic updating of patches
 * Perform daily backups
+* Maintain any wordpress site that may be on the system (upgrade core, plugins, themes)
+* Update the operating system with the latest patches
 
 ## Operations
 ### Website
