@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+
+# -- are you in maintenance mode ? If so, uncomment these lines
+#RewriteRule .* - [R=503,L]
+#ErrorDocument 503 "The site is currently down."
