@@ -33,10 +33,13 @@ if($Q{ROLEWEB} =~ /y/i)
   foreach my $d (readdir(DIR))
   {
     my $dir = "$Q{WWWROOT}/$d";
-    print "$dir\n";
+    
     if(-f "$dir/wp-config.php")
     {
-      print " ==> Found Wordpress\n";
+      print "$dir ==> Found Wordpress\n";
+      system("wp --path=$dir core update");
+      system("wp --path=$wp_path plugin update --all");
+      system("wp --path=$wp_path theme update --all");
     }
   }
 }
