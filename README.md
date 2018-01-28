@@ -1,6 +1,11 @@
 # server-build
 
-A set of scripts used to build a standard, hardened Linux based web server
+A set of scripts used to build a standard, hardened Linux based web server.  This can typically be used for a company or a web development agency that would like to configure a LAMP server without having to worry about the basic config, and the basic security controls.
+
+The solution is not complete yet.  It does work, but not all the security controls have been implemeneted yet.
+
+# Known Issues
+* When new versions of Ubuntu is relased, there are dependency issues with some of the packages.  Keeping backwards compatibility is problematic.  It is recommended that you do a fresh install onto a new VM, and install from scratch.  Migrating the website and database across should be fairly straight forward.
 
 ## How to use
 ### DigitalOcean
@@ -21,14 +26,14 @@ $ usermod -a -G sudo myuser
 * $ sudo ./build-it.pl
 
 #### TODO
-* Create a cron job to refresh the Let's Encrypt certificates
-* Allow to lock down the ssh system with 2FA (Google Authenticator)
-* Allow the inclusion of a firewall (iptables)
-* Allow the use of snort to act as a WAF
-* Allow the automatic updating of patches
-* Perform daily backups
+* Apache - Create a cron job to refresh the Let's Encrypt certificates
+* Linux - Allow to lock down the ssh system with 2FA (Google Authenticator)
+* Linux - Allow the inclusion of a firewall (iptables)
+* Linux - Allow the use of snort to act as a WAF
+* Linux / mySQL - Perform daily backups
 * Maintain any wordpress site that may be on the system (upgrade core, plugins, themes)
-* Update the operating system with the latest patches
+* Linux - Update the operating system with the latest patches
+* Apache - run each website under it's own user id
 
 ## Operations
 ### Website
@@ -53,3 +58,10 @@ TODO
 ### Backups
 TODO
 
+# Design of the solution
+## Linux
+Ubuntu Linux is at the core of the entire solution.  Like with any unix installation, you should never use root.  It is also for that reason that the script would not allow you to run directly as root, as it will check if you've sudo'ed as root instead.
+SSH is has also been hardened, to prevent unauthorized access.
+## Apache
+Apache has been configured to run with SSL, utilizing the free certificates from Let's encrypt.  You can copy your own certificates in if you so chose.
+A www and logs directory is created in the home folder of the website, allowing the operator to quickly analyze any potential issue.
