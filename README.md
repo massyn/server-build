@@ -25,6 +25,12 @@ $ usermod -a -G sudo myuser
 * $ chmod +x *.pl
 * $ sudo ./build-it.pl
 
+### Refresh the local repository
+To update the local scripts
+* $ cd ~/server-build
+* $ git fetch origin
+* $ git reset --hard origin/master
+
 #### TODO
 * Apache - Create a cron job to refresh the Let's Encrypt certificates
 * Linux - Allow to lock down the ssh system with 2FA (Google Authenticator)
