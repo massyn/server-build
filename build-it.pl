@@ -53,6 +53,8 @@ if($Q{ROLEWEB} =~ /y/i)
 	
 	&setup_web();
 	&www_virtualhost(\%Q);
+	
+	system("./harden-php.pl");	# == we need to harden php if this is a web server
 }
 
 &setup_sshd();
@@ -120,8 +122,7 @@ sub setup_web
         }
 
 	my $phpini = "/etc/php/7.1/apache2/php.ini";
-
-        &param($phpini,"expose_php"," = Off");
+	
         &addline($phpini,"extension=php_mysqli.so");
 
         &run("a2enmod ssl");
