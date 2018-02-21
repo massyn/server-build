@@ -31,7 +31,12 @@ if($Q{ROLEDB} =~ /y/i)
 	if(!-f '~/.mylogin.cnf')
 	{
 		print "Please provide the root password (once).  This will be encrypted in the .mylogin.cnf file\n";
-		system("mysql_config_editor set --username=root --password");
+		system("mysql_config_editor set --user=root --password");
+	}
+	
+	if(!-f '~/.mylogin.cnf')
+	{
+		die "Something went wrong with the creation of the .mylogin.cnf file";	
 	}
 	
 	my $user = $db;
