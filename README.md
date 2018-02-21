@@ -59,9 +59,9 @@ The script will utilize Let's Encrypt to setup a certificate for you.
 
 ### Databases
 #### Add a new database
-Create a new database with a simple command line.  No sudo required.
+Create a new database with a simple command line.  No sudo required.  A new password will be set.
+
 * $ ./configure_database.pl databasename
-A new password will be set.
 
 #### Change a DB password
 TODO
