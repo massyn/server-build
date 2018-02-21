@@ -32,7 +32,7 @@ if($Q{ROLEWEB} =~ /y/i)
   opendir(DIR,"$Q{WWWROOT}");
   foreach my $d (readdir(DIR))
   {
-    my $dir = "$Q{WWWROOT}/$d";
+    my $dir = "$Q{WWWROOT}/$d/www";
     
     if(-f "$dir/wp-config.php")
     {
