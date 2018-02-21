@@ -2,6 +2,12 @@
 
 use strict;
 
+do './library.pl';
+&log("Starting $0");
+
+# == check if we are running with a sudo'ed root
+&check_sudo();
+
 # == find the php.ini file
 
 my $ini = &find_ini();
@@ -26,7 +32,9 @@ system("service apache2 restart");
 
 sub find_ini
 {
-        my @locations = ('/etc/php/7.0/apache2/php.ini');
+        my @locations = (       '/etc/php/7.1/apache2/php.ini',
+                                '/etc/php/7.0/apache2/php.ini'
+                               );
 
         foreach my $l (@locations)
         {
