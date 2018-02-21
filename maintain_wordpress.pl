@@ -38,8 +38,8 @@ if($Q{ROLEWEB} =~ /y/i)
     {
       print "$dir ==> Found Wordpress\n";
       system("wp --path=$dir core update");
-      system("wp --path=$wp_path plugin update --all");
-      system("wp --path=$wp_path theme update --all");
+      system("wp --path=$dir plugin update --all");
+      system("wp --path=$dir theme update --all");
     }
   }
 }
