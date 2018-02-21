@@ -7,11 +7,13 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-if [ !-d "$WWWROOT/$1/www" ]; then
+if [ -d "$WWWROOT/$1/www" ]; then
+  curl https://wordpress.org/latest.tar.gz | tar -zxvC /tmp
+  mv /tmp/wordpress/* $WWWROOT/$1/www/
+  
+else
   echo 'The directory does not exist.  Maybe you need to create the website first with ./configure_virtualhost.pl'
   exit 1
 fi
 
-curl https://wordpress.org/latest.tar.gz | tar -zxvC /tmp
 
-mv /tmp/wordpress/* $WWWROOT/$1/www/
