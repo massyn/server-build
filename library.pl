@@ -93,6 +93,7 @@ sub manage_config
 	$Q{ROLEWEB} = &ask("Will this be a web server?","Y",$Q{ROLEWEB});
 	$Q{ROLEDB} = &ask("Will this be a database?","Y",$Q{ROLEDB});
 	$Q{ROLEMAIL} = &ask("Will this be a mail server (outbound)?","Y",$Q{ROLEMAIL});
+	$Q{BACKUP} = &ask("Where should the backups be stored?","$ENV{HOME}/backups",$Q{BACKUP});
 
 	# -- write the config file to the disk
 	open(OUT,">$CONFIG_FILE") || die "Can't write config file - $!";
