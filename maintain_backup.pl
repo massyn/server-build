@@ -8,6 +8,18 @@ do './library.pl';
 my $CONFIG = "/etc/server_build.cfg";
 my %Q = &manage_config($CONFIG);
 
+# == this process relies on the .mylogin.cnf file to be available.  If it's not there, ask for it, else we die.
+if(!-f '~/.mylogin.cnf')
+{
+        print "Please provide the root password (once).  This will be encrypted in the .mylogin.cnf file\n";
+        system("mysql_config_editor set --user=root --password");
+}
+
+if(!-f '~/.mylogin.cnf')
+{
+        die "Something went wrong with the creation of the .mylogin.cnf file";	
+}
+        
 &log("Saving backups to $Q{BACKUP}");
 
 if(!-d $Q{BACKUP})
