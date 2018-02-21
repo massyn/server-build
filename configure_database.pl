@@ -8,6 +8,12 @@ use MIME::Base64;
 do './library.pl';
 &log("Starting $0");
 
+if(`whoami` =~ /root/)
+{
+	&log("Do not run this as root.  It is really not necessary.");
+	die;
+}
+
 my $db = $ARGV[0];
 if($db eq '')
 {
@@ -34,7 +40,7 @@ if($Q{ROLEDB} =~ /y/i)
 		system("mysql_config_editor set --user=root --password");
 	}
 	
-	if(!-f '~/.mylogin.cnf')
+	if(!-r '~/.mylogin.cnf')
 	{
 		die "Something went wrong with the creation of the .mylogin.cnf file";	
 	}
