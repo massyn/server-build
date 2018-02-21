@@ -40,7 +40,7 @@ if($Q{ROLEDB} =~ /y/i)
 		system("mysql_config_editor set --user=root --password");
 	}
 	
-	if(!-r '~/.mylogin.cnf')
+	if(!-f '~/.mylogin.cnf')
 	{
 		die "Something went wrong with the creation of the .mylogin.cnf file";	
 	}
