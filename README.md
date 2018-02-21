@@ -33,6 +33,8 @@ To update the local scripts
 
 #### TODO
 * Apache - Create a cron job to refresh the Let's Encrypt certificates
+* PHP - hardening (in progress)
+* Linux - hardening
 * Linux - Allow to lock down the ssh system with 2FA (Google Authenticator)
 * Linux - Allow the inclusion of a firewall (iptables)
 * Linux - Allow the use of snort to act as a WAF
