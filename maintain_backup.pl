@@ -34,7 +34,7 @@ foreach my $db (`echo show databases |mysql | grep -v Database | grep -v perform
         chomp($db);
         &log("Backing up database ==> $db");
 
-        system("/usr/bin/mysqldump $db > $Q{BACKUP}/db_$db.sql");
+        system("/usr/bin/mysqldump $db |gzip -c > $Q{BACKUP}/db_$db.sql.gz");
 }
 
 # == backup websites
@@ -42,5 +42,5 @@ foreach my $www (`ls $Q{WWWROOT}`)
 {
         chomp($www);
         &log("Backing up website ==> $www");
-        system("/bin/tar -czvf $Q{BACKUP}/www_$www.tar $Q{WWWROOT}/$www/www");
+        system("/bin/tar -czvf $Q{BACKUP}/www_$www.tar.gz $Q{WWWROOT}/$www/www");
 }
