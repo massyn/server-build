@@ -37,13 +37,10 @@ To update the local scripts
 * $ git reset --hard origin/master
 
 #### IN PROGRESS
-* PHP - hardening
-* Linux / mySQL - Perform daily backups
-* Maintain any wordpress site that may be on the system (upgrade core, plugins, themes)
 * Linux - Update the operating system with the latest patches
+* Apache - Create a cron job to refresh the Let's Encrypt certificates
 
 #### TODO
-* Apache - Create a cron job to refresh the Let's Encrypt certificates
 * Linux - hardening
 * Linux - Allow to lock down the ssh system with 2FA (Google Authenticator)
 * Linux - Allow the inclusion of a firewall (iptables)
@@ -69,6 +66,10 @@ You can install a fresh Wordpress site using the latest wordpress code.  First, 
 
 * $ ./install_wordpress.sh newsite.example.com
 
+#### Upgrade Wordpress
+All wordpress sites on the server will be automatically upgraded with the latest core, themes and plugins through a crontab once a day.  To execute the manual upgrade, you can run
+$ ./maintain_wordpress.pl
+
 ### Databases
 #### Add a new database
 Create a new database with a simple command line.  No sudo required.  A new password will be set.
@@ -88,3 +89,5 @@ SSH is has also been hardened, to prevent unauthorized access.
 ## Apache
 Apache has been configured to run with SSL, utilizing the free certificates from Let's encrypt.  You can copy your own certificates in if you so chose.
 A www and logs directory is created in the home folder of the website, allowing the operator to quickly analyze any potential issue.
+## PHP
+With the majority of sites running on PHP, some hardening of the PHP system is performed.
