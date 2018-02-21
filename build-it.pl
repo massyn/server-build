@@ -17,6 +17,10 @@ if($VER eq 'unknown')
   die "Sorry, but this version of Ubuntu is not supported.";
 }
 
+# == make sure everything has the right execution permissions
+system("chmod +x *.pl");
+system("chmod +x *.sh");
+
 # == read the config
 my $CONFIG = "/etc/server_build.cfg";
 my %Q = &manage_config($CONFIG);
@@ -58,6 +62,8 @@ if($Q{ROLEWEB} =~ /y/i)
 }
 
 &setup_sshd();
+
+system("./build-crontab.sh");
 
 #&run("apt-get -y upgrade");
 &run("apt-get -y autoremove");
