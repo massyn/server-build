@@ -1,6 +1,8 @@
 #!/usr/bin/perl
 
 use strict;
+do './library.pl';
+&log("Starting $0");
 
 # == find all the databases
 
