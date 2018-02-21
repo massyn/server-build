@@ -49,7 +49,6 @@ To update the local scripts
 * Linux - Allow the inclusion of a firewall (iptables)
 * Linux - Allow the use of snort to act as a WAF
 * Apache - run each website under it's own user id
-* Wordpress - install a new site by script
 
 ## Operations
 ### Website
@@ -64,6 +63,11 @@ The script will utilize Let's Encrypt to setup a certificate for you.
 
 * Update your DNS entry for the website to point to your server.
 * $ sudo ./configure_virtualhost.pl newsite.example.com yes
+
+#### Install a new Wordpress site
+You can install a fresh Wordpress site using the latest wordpress code.  First, create the basic website using the steps above.  Once that's done, you can use this simple script to do to job.
+
+* $ ./install_wordpress.sh newsite.example.com
 
 ### Databases
 #### Add a new database
