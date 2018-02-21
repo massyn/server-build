@@ -8,4 +8,4 @@ function addtocrontab () {
         cat <(fgrep -i -v "$command" <(crontab -l)) <(echo "$job") | crontab -
 }
 
-addtocrontab "0 0 * * *" "/usr/bin/perl $HOME/server-build/maintain_backup.pl"
+addtocrontab "0 0 * * *" "cd $HOME/server-build && /usr/bin/perl ./maintain_backup.pl"
