@@ -34,13 +34,13 @@ my %Q = &manage_config($CONFIG);
 if($Q{ROLEDB} =~ /y/i)
 {
 	# == Let's check if we have a .myconfig.cfg file.  If not, define the root password first
-	if(!-f '~/.mylogin.cnf')
+	if(!-f "$ENV{HOME}/.mylogin.cnf")
 	{
 		print "Please provide the root password (once).  This will be encrypted in the .mylogin.cnf file\n";
 		system("mysql_config_editor set --user=root --password");
 	}
 	
-	if(!-f '~/.mylogin.cnf')
+	if(!-r "$ENV{HOME}/.mylogin.cnf")
 	{
 		die "Something went wrong with the creation of the .mylogin.cnf file";	
 	}
