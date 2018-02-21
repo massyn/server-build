@@ -31,17 +31,20 @@ To update the local scripts
 * $ git fetch origin
 * $ git reset --hard origin/master
 
+#### IN PROGRESS
+* PHP - hardening
+* Linux / mySQL - Perform daily backups
+* Maintain any wordpress site that may be on the system (upgrade core, plugins, themes)
+* Linux - Update the operating system with the latest patches
+
 #### TODO
 * Apache - Create a cron job to refresh the Let's Encrypt certificates
-* PHP - hardening (in progress)
 * Linux - hardening
 * Linux - Allow to lock down the ssh system with 2FA (Google Authenticator)
 * Linux - Allow the inclusion of a firewall (iptables)
 * Linux - Allow the use of snort to act as a WAF
-* Linux / mySQL - Perform daily backups
-* Maintain any wordpress site that may be on the system (upgrade core, plugins, themes)
-* Linux - Update the operating system with the latest patches
 * Apache - run each website under it's own user id
+* Wordpress - install a new site by script
 
 ## Operations
 ### Website
@@ -67,7 +70,7 @@ Create a new database with a simple command line.  No sudo required.  A new pass
 TODO
 
 ### Backups
-TODO
+Backups are scheduled through a cronjob.  When the server is built, you're given the option to choose where the backups will be stored.  Only the latest copy of backups are kept.  You are responsible for your own offsite copy of the backups.
 
 # Design of the solution
 ## Linux
