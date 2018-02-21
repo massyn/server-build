@@ -19,11 +19,16 @@ $ usermod -a -G sudo myuser
 
 ### Perform the install
 * Install a fresh Ubuntu server image (Currently, 17.10)
+* $ adduser -a myuser
+* $ usermod -a -G sudo myuser
 * Log on with the account (not root!) that has sudo access
 * $ git clone https://github.com/massyn/server-build.git
 * $ cd server-build
 * $ chmod +x *.pl
+* $ chmod +x *.sh
 * $ sudo ./build-it.pl
+* When asked, provide a password for the mySQL root instance
+* When asked, install phpmyadmin on the apache system
 
 ### Refresh the local repository
 To update the local scripts
