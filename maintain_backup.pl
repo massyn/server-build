@@ -42,5 +42,5 @@ foreach my $www (`ls $Q{WWWROOT}`)
 {
         chomp($www);
         &log("Backing up website ==> $www");
-        system("/bin/tar -czvf $Q{BACKUP}/www_$www.tar.gz $Q{WWWROOT}/$www/www");
+        system("/bin/tar -czf $Q{BACKUP}/www_$www.tar.gz $Q{WWWROOT}/$www/www");
 }
