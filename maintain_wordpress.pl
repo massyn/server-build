@@ -6,8 +6,6 @@ use strict;
 do './library.pl';
 &log("Starting $0");
 
-# == check if we are running with a sudo'ed root
-&check_sudo();
 # == before we do anything else, let's check the Ubuntu version
 my $VER = &ubuntu_version();
 if($VER eq 'unknown')
