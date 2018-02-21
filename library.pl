@@ -95,15 +95,22 @@ sub manage_config
 	$Q{ROLEMAIL} = &ask("Will this be a mail server (outbound)?","Y",$Q{ROLEMAIL});
 	$Q{BACKUP} = &ask("Where should the backups be stored?","$ENV{HOME}/backups",$Q{BACKUP});
 
-	# -- write the config file to the disk
-	open(OUT,">$CONFIG_FILE") || die "Can't write config file - $!";
-	print OUT "# Config created on " . scalar gmtime(time) . "\n";
-	foreach my $c (sort keys %Q)
+	if(-w $CONFIG_FILE || !-f $CONFIG_FILE)
 	{
-		print OUT "$c=$Q{$c}\n";
+		# -- write the config file to the disk
+		open(OUT,">$CONFIG_FILE") || die "Can't write config file - $!";
+		print OUT "# Config created on " . scalar gmtime(time) . "\n";
+		foreach my $c (sort keys %Q)
+		{
+			print OUT "$c=$Q{$c}\n";
+		}
+		close OUT;
 	}
-	close OUT;
-
+	else
+	{
+		print "WARNING - could not write config file - it may already exist, or it was not writable.\n";
+	}
+	
 	return %Q;
 }
 
