@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-if [ !-d "$WWWROOT/$1/www"]; then
+if [ !-d "$WWWROOT/$1/www" ]; then
   echo 'The directory does not exist.  Maybe you need to create the website first with ./configure_virtualhost.pl'
   exit 1
 fi
