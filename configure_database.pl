@@ -3,7 +3,6 @@
 # == Configure additional mySQL databases
 
 use strict;
-use DBI;
 use MIME::Base64;
 
 do './library.pl';
@@ -15,8 +14,6 @@ if($db eq '')
         $db = &ask("Enter the database name");
 }
 
-# == check if we are running with a sudo'ed root
-&check_sudo();
 # == before we do anything else, let's check the Ubuntu version
 my $VER = &ubuntu_version();
 if($VER eq 'unknown')
@@ -30,39 +27,28 @@ my %Q = &manage_config($CONFIG);
 
 if($Q{ROLEDB} =~ /y/i)
 {
-	my $rootpw = &ask("Enter the mySQL root password",'','');
-	# == see if we can connect to the database with the root password provided
-	my $dbh = DBI->connect("DBI:mysql:database=mysql;host=localhost",'root',$rootpw, {RaiseError => 0}) || die( $DBI::errstr);
-
+	# == Let's check if we have a .myconfig.cfg file.  If not, define the root password first
+	if(!-f '~/.mylogin.cnf')
+	{
+		print "Please provide the root password (once).  This will be encrypted in the .mylogin.cnf file\n";
+		system("mysql_config_editor set --username=root --password");
+	}
+	
 	my $user = $db;
-	my $pass = &generate_password;;
+	my $pass = &generate_password;
 
-	&db($dbh,"create database $db");
-	&db($dbh,"grant usage on *.* to $user\@localhost identified by \'$pass\'");
-	&db($dbh,"grant all privileges on $db.* to adm${user}\@localhost");
-
-	print "admin user name : $user\n";
+        system("echo \"create database $db\" |mysql");
+        system("echo \"grant usage on *.* to $user\@localhost identified by '$pass'\" | mysql");
+        system("echo \"grant all privileges on $db.* to $user\@localhost\" | mysql");
+	
+	print "STORE THESE CREDENTIALS SECURELY!\n";
+	print "database : $db\n";
+	print "username : $user\n";
 	print "password : $pass\n";
-
-	$dbh->disconnect();
 }
 else
 {
 	&log("This machine is not designated as a database server.  If you decide to change the role, update the config file $CONFIG");
-}
-
-sub db
-{
-        my ($dbh,$cmd) = @_;
-
-        if($dbh->do($cmd))
-        {
-                print "success\n";
-        }
-        else
-        {
-                die "FAILED = $cmd\n";
-        }
 }
 
 sub generate_password
