@@ -38,19 +38,11 @@ if($Q{ROLEDB} =~ /y/i)
 	my $pass = &generate_password;;
 
 	&db($dbh,"create database $db");
-	&db($dbh,"grant usage on *.* to adm$user\@localhost identified by \'$pass\'");
+	&db($dbh,"grant usage on *.* to $user\@localhost identified by \'$pass\'");
 	&db($dbh,"grant all privileges on $db.* to adm${user}\@localhost");
 
-	print "admin user name : adm$user\n";
+	print "admin user name : $user\n";
 	print "password : $pass\n";
-
-	my $pass2 = &generate_password;
-	&db($dbh,"grant usage on *.* to $user\@localhost identified by \'$pass2\'");
-	&db($dbh,"grant insert, update, delete, select on $db.* to ${user}\@localhost");
-
-	print "\n";
-	print "normal username : $user\n";
-	print "password : $pass2\n";
 
 	$dbh->disconnect();
 }
