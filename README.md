@@ -37,14 +37,14 @@ To update the local scripts
 * $ git reset --hard origin/master
 
 #### IN PROGRESS
-* Linux - Update the operating system with the latest patches
-* Apache - Create a cron job to refresh the Let's Encrypt certificates
 
 #### TODO
 * Linux - hardening
-* Linux - Allow to lock down the ssh system with 2FA (Google Authenticator)
-* Linux - Allow the inclusion of a firewall (iptables)
-* Linux - Allow the use of snort to act as a WAF
+* - Allow to lock down the ssh system with 2FA (Google Authenticator)
+* - Allow the inclusion of a firewall (iptables)
+* - Allow the use of snort to act as a WAF
+* - Blocking of excessive ssh connections (fail2ban ?)
+* mySQL - hardening
 * Apache - run each website under it's own user id
 
 ## Operations
@@ -86,8 +86,10 @@ Backups are scheduled through a cronjob.  When the server is built, you're given
 ## Linux
 Ubuntu Linux is at the core of the entire solution.  Like with any unix installation, you should never use root.  It is also for that reason that the script would not allow you to run directly as root, as it will check if you've sudo'ed as root instead.
 SSH is has also been hardened, to prevent unauthorized access.
+Once a week the system will automatically apply all new patches through a cronjob.  
 ## Apache
 Apache has been configured to run with SSL, utilizing the free certificates from Let's encrypt.  You can copy your own certificates in if you so chose.
 A www and logs directory is created in the home folder of the website, allowing the operator to quickly analyze any potential issue.
+Let's Encrypt certificates will be checked once a week through a cronjob to be refreshed if necessary.
 ## PHP
 With the majority of sites running on PHP, some hardening of the PHP system is performed.
