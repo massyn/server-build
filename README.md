@@ -12,21 +12,21 @@ The solution is not complete yet.  It does work, but not all the security contro
 When utilizing Virtual Machines from Digital Ocean, you need to perform the following steps.
 * Create a new Virtual Machine image, with the Ubuntu 17.10 image.  As soon as the VM is created, DigitalOcean will email you the root password.
 * As soon as you have logged on as root, create a new user account.  In this example, change "myuser" to the new user account.
-`$ adduser -a **myuser**`
+`$ adduser -a myuser`
 * Add the user to the sudo group
-`$ usermod -a -G sudo **myuser**`
+`$ usermod -a -G sudo myuser`
 * Log out as root, and log on with the new user account
 
 ### Perform the install
 * Install a fresh Ubuntu server image (Currently, 17.10)
-`$ adduser -a myuser`
-`$ usermod -a -G sudo myuser`
+`$ adduser -a myuser
+$ usermod -a -G sudo myuser`
 * Log on with the account (not root!) that has sudo access
-`$ git clone https://github.com/massyn/server-build.git`
-`$ cd server-build`
-`$ chmod +x *.pl`
-`$ chmod +x *.sh`
-`sudo ./build-it.pl`
+`$ git clone https://github.com/massyn/server-build.git
+$ cd server-build
+$ chmod +x *.pl
+$ chmod +x *.sh
+sudo ./build-it.pl`
 * When asked, provide a password for the mySQL root instance
 * When asked, install phpmyadmin on the apache system
 
