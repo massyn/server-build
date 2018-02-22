@@ -12,29 +12,29 @@ The solution is not complete yet.  It does work, but not all the security contro
 When utilizing Virtual Machines from Digital Ocean, you need to perform the following steps.
 * Create a new Virtual Machine image, with the Ubuntu 17.10 image.  As soon as the VM is created, DigitalOcean will email you the root password.
 * As soon as you have logged on as root, create a new user account.  In this example, change "myuser" to the new user account.
-    $ adduser -a myuser
+`$ adduser -a **myuser**`
 * Add the user to the sudo group
-    $ usermod -a -G sudo myuser
+`$ usermod -a -G sudo **myuser**`
 * Log out as root, and log on with the new user account
 
 ### Perform the install
 * Install a fresh Ubuntu server image (Currently, 17.10)
-    $ adduser -a myuser
-    $ usermod -a -G sudo myuser
+`$ adduser -a myuser`
+`$ usermod -a -G sudo myuser`
 * Log on with the account (not root!) that has sudo access
-    $ git clone https://github.com/massyn/server-build.git
-    $ cd server-build
-    $ chmod +x *.pl
-    $ chmod +x *.sh
-    $ sudo ./build-it.pl
+`$ git clone https://github.com/massyn/server-build.git`
+`$ cd server-build`
+`$ chmod +x *.pl`
+`$ chmod +x *.sh`
+`sudo ./build-it.pl`
 * When asked, provide a password for the mySQL root instance
 * When asked, install phpmyadmin on the apache system
 
 ### Refresh the local repository
 To update the local scripts
-    $ cd ~/server-build
-    $ git fetch origin
-    $ git reset --hard origin/master
+`$ cd ~/server-build`
+`$ git fetch origin`
+`$ git reset --hard origin/master`
 
 #### IN PROGRESS
 
@@ -52,7 +52,7 @@ To update the local scripts
 #### Add a website
 * Update your DNS entry for the website to point to your server.
 * Execute the *configure_virtualhost.pl* script to create the site.
-    $ sudo ./configure_virtualhost.pl newsite.example.com
+`$ sudo ./configure_virtualhost.pl newsite.example.com`
 
 Each website will have a seperate directory.  Depending on where you stored your sites (the default is /wwwroot), the script will create a new directory, and configure Apache to use the site.
 
@@ -61,22 +61,23 @@ The script will utilize Let's Encrypt to setup a certificate for you.
 
 * Update your DNS entry for the website to point to your server.
 * Execute the *configure_virtualhost.pl* script to create the site.
-    $ sudo ./configure_virtualhost.pl newsite.example.com yes
+`$ sudo ./configure_virtualhost.pl newsite.example.com yes`
 
 #### Install a new Wordpress site
 You can install a fresh Wordpress site using the latest wordpress code.  First, create the basic website using the steps above.  Once that's done, you can use this simple script to do to job.
 
-* $ ./install_wordpress.sh newsite.example.com
+`$ ./install_wordpress.sh newsite.example.com`
 
 #### Upgrade Wordpress
 All wordpress sites on the server will be automatically upgraded with the latest core, themes and plugins through a crontab once a day.  To execute the manual upgrade, you can run
-    $ ./maintain_wordpress.pl
+
+`$ ./maintain_wordpress.pl`
 
 ### Databases
 #### Add a new database
 Create a new database with a simple command line.  No sudo required.  A new password will be set.
 
-    $ ./configure_database.pl databasename
+`$ ./configure_database.pl databasename`
 
 #### Change a DB password
 TODO
