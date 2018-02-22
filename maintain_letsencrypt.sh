@@ -1,6 +1,6 @@
 #!/bin/sh
 cd ~/letsencrypt
 
-sudo service apache2 stop
-sudo ./letsencrypt/letsencrypt-auto renew
-sudo service apache2 start
+/usr/sbin/service apache2 stop
+./letsencrypt/letsencrypt-auto renew
+/usr/sbin/service apache2 start
