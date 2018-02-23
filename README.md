@@ -24,20 +24,23 @@ When utilizing Virtual Machines from Digital Ocean, you need to perform the foll
   * `usermod -a -G sudo myuser`
 * Log on with the account (not root!) that has sudo access
 * Clone the code from Github, and execute the build
-  * `git clone https://github.com/massyn/server-build.git`
-  * `cd server-build`
-  * `chmod +x *.pl`
-  * `chmod +x *.sh`
-  * `sudo ./build-it.pl`
+```bash
+git clone https://github.com/massyn/server-build.git
+cd server-build
+chmod +x *.pl
+chmod +x *.sh
+sudo ./build-it.pl
+```
 * When asked, provide a password for the mySQL root instance
 * When asked, install phpmyadmin on the apache system
 
 ### Refresh the local repository
 To update the local scripts
-* `cd ~/server-build`
-* `git fetch origin`
-* `git reset --hard origin/master`
-
+```bash
+cd ~/server-build
+git fetch origin
+git reset --hard origin/master
+```
 #### IN PROGRESS
 
 #### TODO
