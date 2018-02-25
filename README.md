@@ -6,6 +6,8 @@ The solution is not complete yet.  It does work, but not all the security contro
 
 # Known Issues
 * When new versions of Ubuntu is relased, there are dependency issues with some of the packages.  Keeping backwards compatibility is problematic.  It is recommended that you do a fresh install onto a new VM, and install from scratch.  Migrating the website and database across should be fairly straight forward.
+* The build script is not taking timezones into consideration.  Depending on which provider you go with, or how you build the base build, it can run with different time zones.  This has the impact that the cron jobs may run at times that you did not intend it to.  Work around is to adjust the timezone manually, or to adjust the crontab schedule according to your needs.
+* The mySQL credentials are not being asked to be stored during build time.  The build script needs to explicitly ask for it when the mySQL root account is configured.  Workaround : run the maintain_backup.sh script manually.  It will force the script to create the credential file.
 
 ## How to use
 ### DigitalOcean
@@ -41,8 +43,6 @@ cd ~/server-build
 git fetch origin
 git reset --hard origin/master
 ```
-#### IN PROGRESS
-
 #### TODO
 * [ ] - Linux - hardening
   * [ ] - Allow to lock down the ssh system with 2FA (Google Authenticator)
