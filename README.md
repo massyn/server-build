@@ -48,7 +48,6 @@ git reset --hard origin/master
 * [ ] - Linux - hardening
   * [ ] - Allow to lock down the ssh system with 2FA (Google Authenticator)
   * [ ] - Allow the inclusion of a firewall (iptables)
-  * [ ] - Allow the use of snort to act as a WAF
   * [ ] - Blocking of excessive ssh connections (fail2ban ?)
 * [ ] - mySQL - hardening
 * [ ] - Apache - run each website under it's own user id
@@ -102,3 +101,6 @@ A www and logs directory is created in the home folder of the website, allowing 
 Let's Encrypt certificates will be checked once a week through a cronjob to be refreshed if necessary.
 ## PHP
 With the majority of sites running on PHP, some hardening of the PHP system is performed.
+# Some key decisions
+## Use of Snort
+I've decided not to configure snort automatically.  Snort is a whole implementation on it's own, with many variables, and many things to consider.  This needs to be left to each web operator to configure themselves to their needs.
