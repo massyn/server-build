@@ -8,7 +8,6 @@ The solution is not complete yet.  It does work, but not all the security contro
 * When new versions of Ubuntu is relased, there are dependency issues with some of the packages.  Keeping backwards compatibility is problematic.  It is recommended that you do a fresh install onto a new VM, and install from scratch.  Migrating the website and database across should be fairly straight forward.
 * ENHANCEMENT - The build script is not taking timezones into consideration.  Depending on which provider you go with, or how you build the base build, it can run with different time zones.  This has the impact that the cron jobs may run at times that you did not intend it to.  Work around is to adjust the timezone manually, or to adjust the crontab schedule according to your needs.
 * BUG - The mySQL credentials are not being asked to be stored during build time.  The build script needs to explicitly ask for it when the mySQL root account is configured.  Workaround : run the maintain_backup.sh script manually.  It will force the script to create the credential file.
-* BUG - Crontabs are all created under root.  Some need to be under the local user.
 
 ## How to use
 ### DigitalOcean
@@ -33,6 +32,7 @@ cd server-build
 chmod +x *.pl
 chmod +x *.sh
 sudo ./build-it.pl
+./build-crontab.sh
 ```
 * When asked, provide a password for the mySQL root instance
 * When asked, install phpmyadmin on the apache system
