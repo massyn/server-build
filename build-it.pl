@@ -63,12 +63,10 @@ if($Q{ROLEWEB} =~ /y/i)
 
 &setup_sshd();
 
-system("./build-crontab.sh");
-
 #&run("apt-get -y upgrade");
 &run("apt-get -y autoremove");
 
-&log(" ===== ALL DONE ===== ");
+&log(" ===== ALL DONE - consider rebooting before doing anything else ===== ");
 
 exit(0);
 # ==
