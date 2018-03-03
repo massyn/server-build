@@ -29,7 +29,7 @@ if($Q{ROLEWEB} =~ /y/i)
 	{	
 		if(-d "$Q{WWWROOT}/$newsite")
 		{
-			&log("ERROR - can not create new site $newsite because the directory $Q{WWWROOT}/$newsite already exists");
+			&log("WARNING - can not create new site $newsite because the directory $Q{WWWROOT}/$newsite already exists");
 		}
 		else
 		{
@@ -41,12 +41,17 @@ if($Q{ROLEWEB} =~ /y/i)
 	if($usessl =~ /y/i)
 	{
 		# == clone Let's encrypt
-		if(!-d "~letsencrypt")
+		if(!-d "~/letsencrypt")
 		{
 			system("git clone https://github.com/letsencrypt/letsencrypt ~/letsencrypt");
 		}
 		system("service apache2 stop");
 		system("~/letsencrypt/letsencrypt-auto certonly --standalone -d $newsite --email $Q{ADMIN} --renew-by-default");
+		if($? != 0)
+		{
+			print "WARNING - Let's Encrypt had a problem.  Press enter to continue.\n";
+			<STDIN>;
+		}
 		system("service apache2 start");
 	}	
 	&www_virtualhost(\%Q);
