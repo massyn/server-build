@@ -9,7 +9,6 @@ do './library.pl';
 my $newsite = $ARGV[0];
 my $usessl = $ARGV[1];
 
-&log("Starting $0");
 &log("Website : $newsite");
 &log("Use SSL : $usessl");
 
