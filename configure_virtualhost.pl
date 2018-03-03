@@ -9,6 +9,10 @@ do './library.pl';
 my $newsite = $ARGV[0];
 my $usessl = $ARGV[1];
 
+&log("Starting $0");
+&log("Website : $newsite");
+&log("Use SSL : $usessl");
+
 # == check if we are running with a sudo'ed root
 &check_sudo();
 # == before we do anything else, let's check the Ubuntu version
@@ -41,7 +45,7 @@ if($Q{ROLEWEB} =~ /y/i)
 	if($usessl =~ /y/i)
 	{
 		# == clone Let's encrypt
-		if(!-d "~/letsencrypt/")
+		if(!-d "$ENV{HOME}/letsencrypt/")
 		{
 			system("git clone https://github.com/letsencrypt/letsencrypt ~/letsencrypt");
 		}
@@ -61,3 +65,4 @@ else
 {
 	&log("This machine is not designated as a web server.  If you decide to change the role, update the config file $CONFIG");
 }
+&log("** All done! **");
