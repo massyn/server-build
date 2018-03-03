@@ -41,7 +41,7 @@ if($Q{ROLEWEB} =~ /y/i)
 	if($usessl =~ /y/i)
 	{
 		# == clone Let's encrypt
-		if(!-d "~/letsencrypt")
+		if(!-d "~/letsencrypt/")
 		{
 			system("git clone https://github.com/letsencrypt/letsencrypt ~/letsencrypt");
 		}
@@ -49,7 +49,8 @@ if($Q{ROLEWEB} =~ /y/i)
 		system("~/letsencrypt/letsencrypt-auto certonly --standalone -d $newsite --email $Q{ADMIN} --renew-by-default");
 		if($? != 0)
 		{
-			print "WARNING - Let's Encrypt had a problem.  Press enter to continue.\n";
+			print "\n";
+			&log("WARNING - Let's Encrypt had a problem.  Press enter to continue.");
 			<STDIN>;
 		}
 		system("service apache2 start");
