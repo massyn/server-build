@@ -34,6 +34,7 @@ sudo ./build-it.pl
 ```
 * When asked, provide a password for the mySQL root instance
 * When asked, install phpmyadmin on the apache system
+* To change the timezone, execute `sudo timedatectl set-timezone Australia/Sydney` (changing Australia/Sydney to your timezone)
 
 ### Refresh the local repository
 To update the local scripts
