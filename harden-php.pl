@@ -9,43 +9,33 @@ do './library.pl';
 &check_sudo();
 
 # == find the php.ini file
-
-my $ini = &find_ini();
-
-&harden($ini,'expose_php'               ,'Off');
-&harden($ini,'error_reporting'          ,'E_ALL');
-&harden($ini,'display_errors'           ,'Off');
-&harden($ini,'display_startup_errors'   ,'Off');
-&harden($ini,'log_errors'               ,'On');
-&harden($ini,'ignore_repeated_errors'   ,'Off');
-
-
-# == session
-
-&harden($ini,'session.cookie_httponly','On');
-&harden($ini,'session.hash_function','"sha256"');
-&harden($ini,'session.auto_start','Off');
-&harden($ini,'session.hash_bits_per_character',6);
-&harden($ini,'session.use_trans_sid',0);
+       
+foreach $ini (`find /etc/php -name php.ini`) {
+        chomp($ini);
+        print "Found INI file ==> $ini\n";
+        &harden_ini($ini);
+}
 
 system("service apache2 restart");
 
-sub find_ini
+sub harden_ini
 {
-        my @locations = (       '/etc/php/7.1/apache2/php.ini',
-                                '/etc/php/7.0/apache2/php.ini'
-                               );
+        my ($ini) = @_;
+        &harden($ini,'expose_php'               ,'Off');
+        &harden($ini,'error_reporting'          ,'E_ALL');
+        &harden($ini,'display_errors'           ,'Off');
+        &harden($ini,'display_startup_errors'   ,'Off');
+        &harden($ini,'log_errors'               ,'On');
+        &harden($ini,'ignore_repeated_errors'   ,'Off');
 
-        foreach my $l (@locations)
-        {
-                if(-f $l)
-                {
-                        print "found php.ini in $l\n";
-                        return $l;
-                }
-        }
 
-        die "php.ini could not be found";
+        # == session
+
+        &harden($ini,'session.cookie_httponly','On');
+        &harden($ini,'session.hash_function','"sha256"');
+        &harden($ini,'session.auto_start','Off');
+        &harden($ini,'session.hash_bits_per_character',6);
+        &harden($ini,'session.use_trans_sid',0);
 }
 
 sub harden
