@@ -10,7 +10,7 @@ do './library.pl';
 
 # == find the php.ini file
        
-foreach $ini (`find /etc/php -name php.ini`) {
+foreach my $ini (`find /etc/php -name php.ini`) {
         chomp($ini);
         print "Found INI file ==> $ini\n";
         &harden_ini($ini);
