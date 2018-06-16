@@ -17,10 +17,14 @@ if [ `whoami` == "root" ]; then
         iptables -F
 
         # == setup the rules
+        iptables -A INPUT -i lo -j ACCEPT
+        iptables -A OUTPUT -o lo -j ACCEPT
 
-        iptables -A INPUT -p tcp --dport 1022 -j ACCEPT
+        iptables -A INPUT -p tcp --dport $P -j ACCEPT
         iptables -A INPUT -p tcp --dport 80 -j ACCEPT
         iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+        iptables -I INPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
         iptables -A INPUT -j DROP
 
