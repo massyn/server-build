@@ -71,7 +71,12 @@ if($Q{ROLEWEB} =~ /y/i)
 
 &setup_sshd();
 
-#&run("apt-get -y upgrade");
+# == configure the firewall
+if($Q{FIREWALL} =~ /y/i) {
+	system("./build-firewall.sh");
+}
+
+&run("apt-get -y upgrade");
 &run("apt-get -y autoremove");
 
 &log(" ===== ALL DONE - consider rebooting before doing anything else ===== ");
@@ -153,12 +158,9 @@ sub setup_web
 
 sub setup_sshd
 {
-        if(!-f "/etc/ssh/sshd_config")
-        {
+        if(!-f "/etc/ssh/sshd_config") {
                 &log("sshd_config not found!");
-        }
-        else
-        {
+        } else {
           &param("/etc/ssh/sshd_config","PermitRootLogin","no");
           &param("/etc/ssh/sshd_config","X11Forwarding","no");
           &param("/etc/ssh/sshd_config","ChallengeResponseAuthentication","yes");
