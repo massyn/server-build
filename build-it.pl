@@ -45,8 +45,7 @@ foreach my $a (<IN>)
 		# Search for the package first
 		my $package = `apt-cache search . | grep -E "$p" | awk {'print \$1'} 2>&1`;
 		if($package eq '') {
-			print "ERROR : We could not find package [$package] ($p)\n";
-			<STDIN>;
+			print "WARNING : We could not find package ($p)\n";
 		} else {
 			foreach my $p2 (split(/\n/,$package)) {
 				print "Installing $p2...\n";
