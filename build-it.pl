@@ -33,17 +33,19 @@ open(IN,"packages.cfg");
 foreach my $a (<IN>)
 {
 	chomp($a);
-	my ($v,$r,$p) = split(/\;/,$a);
+	my ($r,$p) = split(/\;/,$a);
 	
-	#TODO - check the role
 	if(
-		($v eq '*' || $v eq $VER) && 
-		(
-			($r eq '*') || ($r eq 'db' && $Q{ROLEDB} =~ /y/i) || ($r eq 'web' && $Q{ROLEWEB} =~ /y/i) || ($r eq 'mail' && $Q{ROLEMAIL} =~ /y/i)
-		)
+		($r eq '*') ||
+		($r eq 'db' && $Q{ROLEDB} =~ /y/i) || 
+		($r eq 'web' && $Q{ROLEWEB} =~ /y/i) || 
+		($r eq 'mail' && $Q{ROLEMAIL} =~ /y/i)
 	)
 	{
-		&run("apt-get -y install $p");
+		# Search for the package first
+		my $package = `apt-cache search . | grep -E "$p" | awk {'print \$1'} 2>&1`;
+		print "Installing $package...\n";
+		&run("apt-get -y install $package");
 	}
 }
 
