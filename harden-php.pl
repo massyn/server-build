@@ -31,11 +31,12 @@ sub harden_ini
 
         # == session
 
-        &harden($ini,'session.cookie_httponly','On');
-        &harden($ini,'session.hash_function','"sha256"');
-        &harden($ini,'session.auto_start','Off');
-        &harden($ini,'session.hash_bits_per_character',6);
-        &harden($ini,'session.use_trans_sid',0);
+        &harden($ini,'session.cookie_httponly'          ,'On');
+        &harden($ini,'session.hash_function'            ,'"sha256"');
+        &harden($ini,'session.auto_start'               ,'Off');
+        &harden($ini,'session.hash_bits_per_character'  ,6);
+        &harden($ini,'session.use_trans_sid'            ,0);
+        &harden($ini,'extension'                        ,'php_mysqli.so');
 }
 
 sub harden
