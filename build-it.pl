@@ -48,8 +48,10 @@ foreach my $a (<IN>)
 			print "ERROR : We could not find package [$package] ($p)\n";
 			<STDIN>;
 		} else {
-			print "Installing $package...\n";
-			&run("apt-get -y install $package");
+			foreach my $p2 (split(/\n/,$package)) {
+				print "Installing $p2...\n";
+				&run("apt-get -y install $p2");
+			}
 		}
 	}
 }
