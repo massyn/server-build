@@ -18,4 +18,6 @@ function addtocrontabroot () {
 addtocrontab "0 0 * * *" "cd $HOME/server-build && /usr/bin/perl ./maintain_backup.pl > /tmp/maintain_backup.log 2>&1"
 addtocrontab "* 1 * * *" "cd $HOME/server-build && /usr/bin/perl ./maintain_wordpress.pl > /tmp/maintain_wordpress.log 2>&1"
 addtocrontabroot "* 2 * * 0" "cd $HOME/server-build && ./maintain_letsencrypt.sh > /tmp/maintain_letsencrypt.log 2>&1"
-addtocrontabroot "* 2 * * 6" "cd $HOME/server-build && ./maintain_os.sh > /tmp/maintain_os.log 2>&1"
+
+# The system update is not working.  Many of the patches need user interaction, so I'm taking this out for now.
+#addtocrontabroot "* 2 * * 6" "cd $HOME/server-build && ./maintain_os.sh > /tmp/maintain_os.log 2>&1"
