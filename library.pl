@@ -94,6 +94,7 @@ sub manage_config
 	$Q{ROLEDB} = &ask("Will this be a database?","Y",$Q{ROLEDB});
 	$Q{ROLEMAIL} = &ask("Will this be a mail server (outbound)?","Y",$Q{ROLEMAIL});
 	$Q{BACKUP} = &ask("Where should the backups be stored?","$ENV{HOME}/backups",$Q{BACKUP});
+	$Q{FIREWALL} = &ask("Would you like to configure the basic firewall?","Y",$Q{FIREWALL});
 
 	if(-w $CONFIG_FILE || !-f $CONFIG_FILE)
 	{
