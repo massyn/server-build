@@ -134,10 +134,6 @@ sub setup_web
                 &run("kill -9 \`ps -ef |grep apache | grep -v grep | awk {'print \$2'}\`")
         }
 
-	my $phpini = "/etc/php/7.1/apache2/php.ini";
-	
-        &addline($phpini,"extension=php_mysqli.so");
-
         &run("a2enmod ssl");
         &run("a2enmod rewrite");
         &run("a2enmod cgi");
