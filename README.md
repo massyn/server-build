@@ -4,9 +4,6 @@ A set of scripts used to build a standard, hardened Linux based web server.  Thi
 
 The solution is not complete yet.  It does work, but not all the security controls have been implemeneted yet.
 
-# Known Issues
-* When new versions of Ubuntu is relased, there are dependency issues with some of the packages.  Keeping backwards compatibility is problematic.  It is recommended that you do a fresh install onto a new VM, and install from scratch.  Migrating the website and database across should be fairly straight forward.
-
 ## How to use
 ### DigitalOcean
 When utilizing Virtual Machines from Digital Ocean, you need to perform the following steps.
@@ -52,6 +49,12 @@ git reset --hard origin/master
 * [ ] - Apache - run each website under it's own user id
 
 ## Operations
+### Operating System patching
+The operating system needs to be patched regularly.  The plan is to do this automatically, but I've decided to remove the automatic update via crontab.  There are some packages that do not like to be upgraded via a crontab, since it needs user feedback.  Change Management is also bypassed, which is a problem, especially if you need to do proper testing before upgrading.
+To upgrade the system, you can follow normal Ubuntu upgrade processes, or you can run the *maintain_os.sh* script.
+* `sudo ./maintain_os.sh`
+Once done, it would be a good idea to perform a reboot.
+
 ### Website
 #### Add a website
 * Update your DNS entry for the website to point to your server.
